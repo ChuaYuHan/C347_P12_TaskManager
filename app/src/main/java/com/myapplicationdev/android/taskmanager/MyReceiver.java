@@ -4,6 +4,9 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.RemoteInput;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -35,10 +38,33 @@ public class MyReceiver extends BroadcastReceiver {
         Intent i = new Intent(context, MainActivity.class);
         PendingIntent pi = PendingIntent.getActivity(context, requestCode, i, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "default");
-        builder.setContentTitle("Task Manager Reminder");
+        NotificationCompat.Action action = new NotificationCompat.Action.Builder(
+                R.mipmap.ic_launcher,
+                "Launch Task Manager",
+                pi)
+                .build();
 
-        builder.setContentText(task.getName());
+        Intent intentReply = new Intent(context, ReplyActivity.class);
+        PendingIntent pendingIntentReply = PendingIntent.getActivity(context, 0, intentReply, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Action action2 = new NotificationCompat.Action.Builder(
+                R.mipmap.ic_launcher,
+                "Reply",
+                pendingIntentReply)
+                .build();
+
+        RemoteInput ri = new RemoteInput.Builder("status")
+                .setLabel("Status report")
+                .setChoices(new String [] {"Completed", "Not yet"})
+                .build();
+
+        NotificationCompat.WearableExtender extender = new NotificationCompat.WearableExtender();
+        extender.addAction(action);
+        extender.addAction(action2);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "default");
+        builder.setContentTitle(task.getName());
+        builder.setContentText(task.getDescription());
         builder.setSmallIcon(android.R.drawable.btn_star);
         builder.setAutoCancel(true);
         builder.setContentIntent(pi);
@@ -59,7 +85,9 @@ public class MyReceiver extends BroadcastReceiver {
         // lights
         builder.setLights(0xff00ff00, 300, 100);
 
+        builder.extend(extender);
         Notification n = builder.build();
+
         nm.notify(123, n);
     }
 }

@@ -16,8 +16,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "tasks.db";
     private static final String TABLE_TASK = "task";
     private static final String COLUMN_ID = "id";
-    private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_NAME = "name";
+    private static final String COLUMN_DESCRIPTION = "description";
 
     public DBHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VER);

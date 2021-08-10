@@ -69,8 +69,7 @@ public class AddActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(AddActivity.this, MainActivity.class);
-                startActivity(i);
+                finish();
             }
         });
     }

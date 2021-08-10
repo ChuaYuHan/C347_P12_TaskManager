@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TaskManager">
+        <activity android:name=".ReplyActivity"></activity>
 
         <receiver
             android:name=".MyReceiver"
@@ -22,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddActivity"/>
+        <activity android:name=".AddActivity" />
     </application>
 
 </manifest>
